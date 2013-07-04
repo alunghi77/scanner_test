@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 
+from time import sleep
 from Adafruit_I2C import Adafruit_I2C
 from Adafruit_MCP230xx import Adafruit_MCP230XX
 from Adafruit_CharLCDPlate import Adafruit_CharLCDPlate
@@ -28,7 +29,7 @@ def init_test():
     # Commented out to speed up overal test time
 	# Starting On Board System Check
 	lcd.backlight(lcd.BLUE)
-	lcd.message("  GD Scanner Unit  \n Booting... ")
+	lcd.message("Welcome to \nGD Scanner Unit ")
 	sleep(21)
 
 
