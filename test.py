@@ -164,7 +164,7 @@ def do_reverse_ssh():
 		lcd.clear()
 		lcd.backlight(lcd.GREEN)
 		lcd.message("Reverse Tunnel:\nSuccess")
-		sleep(1)
+		sleep(2)
 	except socket.error:
 		lcd.clear()
 		lcd.message("Reverse Shell: \nFailed")
