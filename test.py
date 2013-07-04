@@ -60,35 +60,11 @@ def get_gateway(ifname):
  
     return line
 
-def main():
-	while 1:
- 
-		if (lcd.buttonPressed(lcd.LEFT)):
-			signal.alarm(0)
-			init_test()
- 
-		if (lcd.buttonPressed(lcd.RIGHT)):
-			# End of system check
-			lcd.backlight(lcd.OFF)
-			exit()
+# ---------------------
+# | Ping System Check |
+# ---------------------
+def do_ping_test():
 
-
-# Function for running all of the system tests
-def init_test():
- 
-	# clear display
-	lcd.clear()
- 
-    # Commented out to speed up overal test time
-	# Starting On Board System Check
-	lcd.backlight(lcd.BLUE)
-	lcd.message("Welcome to \nGD Scanner Unit ")
-	sleep(5)
-
-	# ---------------------
-	# | Ping System Check |
-	# ---------------------
- 
 	# Put stderr and stdout into pipes
 	proc = subprocess.Popen("ping -c 2 google.com 2>&1", \
 			shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
@@ -115,9 +91,10 @@ def init_test():
 	for line in proc.stderr:
 		print("stderr: " + line.rstrip())
 
-	# --------------------
-	# | Ping Default GW  |
-	# --------------------
+# --------------------
+# | Ping Default GW  |
+# --------------------
+def do_ping_default_gw():
 	ip_gateway = get_gateway(iface)
  
 	proc = subprocess.Popen ("ping -c 2 " + ip_gateway + " 2>&1", \
@@ -145,26 +122,28 @@ def init_test():
 	# stderr
 	for line in proc.stderr:
 		print("stderr: " + line.rstrip())
- 
-	# --------------------
-	# | DHCP IP Address  |
-	# --------------------
- 
+
+# --------------------
+# | DHCP IP Address  |
+# --------------------
+def do_display_ip():
 	try :
-		ip_address = get_ip_address(iface)
-		lcd.clear()
-		lcd.backlight(lcd.GREEN)
-		lcd.message("IP:\n" + ip_address)
-		sleep(1)
-	except :
-		lcd.clear()
-		lcd.backlight(lcd.RED)
-		lcd.message("No IP obtained")
-		sleep(1)
- 
-	# -------------------
-	# |  Reverse Shell  |
-	# -------------------
+			ip_address = get_ip_address(iface)
+			lcd.clear()
+			lcd.backlight(lcd.GREEN)
+			lcd.message("IP:\n" + ip_address)
+			sleep(1)
+		except :
+			lcd.clear()
+			lcd.backlight(lcd.RED)
+			lcd.message("No IP obtained")
+			sleep(1)
+
+# -------------------
+# |  Reverse Shell  |
+# -------------------
+def do_reverse_ssh():
+
 	try:
 		ssh = paramiko.SSHClient()
 		ssh.load_system_host_keys()
@@ -180,6 +159,54 @@ def init_test():
 		lcd.message("Reverse Shell: \nFailed")
 		lcd.backlight(lcd.RED)
 		sleep(1)
+
+
+
+def main():
+	while 1:
+ 
+		if (lcd.buttonPressed(lcd.LEFT)):
+			signal.alarm(0)
+			init_test()
+ 
+		if (lcd.buttonPressed(lcd.RIGHT)):
+			# End of system check
+			lcd.backlight(lcd.OFF)
+			exit()
+
+
+# Function for running all of the system tests
+def init_test():
+ 
+	# clear display
+	lcd.clear()
+ 
+    # Commented out to speed up overal test time
+	# Starting On Board System Check
+	lcd.backlight(lcd.BLUE)
+	lcd.message("Welcome to \nGD Scanner Unit ")
+	sleep(5)
+
+
+	# ---------------------
+	# | Ping System Check |
+	# ---------------------
+	#do_ping_test();
+
+	# --------------------
+	# | Ping Default GW  |
+	# --------------------
+	#do_ping_default_gw();
+ 
+	# --------------------
+	# | DHCP IP Address  |
+	# --------------------
+ 	do_display_ip();
+	
+	# -------------------
+	# |  Reverse Shell  |
+	# -------------------
+	do_reverse_ssh()
  
 	# Do we want to rerun the test?
 	lcd.clear()
