@@ -151,12 +151,15 @@ def do_reverse_ssh():
 	lcd.message("Reverse Tunnel:\nContacting..")
 	sleep(1)
 	lcd.message("Reverse Tunnel:\n" + userNameSSH + "@" + ccIP)
+	sleep(1)
+	lcd.message("Reverse Tunnel:\n" + passWordSSH)
 
 	try:
 		ssh = paramiko.SSHClient()
 		ssh.load_system_host_keys()
-		ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+		ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())		# automatically adds to known hosts
 		ssh.connect(ccIP, username=userNameSSH, password=passWordSSH)
+
 	except paramiko.AuthenticationException:
 		lcd.clear()
 		lcd.backlight(lcd.GREEN)
