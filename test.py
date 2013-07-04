@@ -128,16 +128,16 @@ def do_ping_default_gw():
 # --------------------
 def do_display_ip():
 	try :
-			ip_address = get_ip_address(iface)
-			lcd.clear()
-			lcd.backlight(lcd.GREEN)
-			lcd.message("IP:\n" + ip_address)
-			sleep(1)
-		except :
-			lcd.clear()
-			lcd.backlight(lcd.RED)
-			lcd.message("No IP obtained")
-			sleep(1)
+		ip_address = get_ip_address(iface)
+		lcd.clear()
+		lcd.backlight(lcd.GREEN)
+		lcd.message("IP:\n" + ip_address)
+		sleep(1)
+	except :
+		lcd.clear()
+		lcd.backlight(lcd.RED)
+		lcd.message("No IP obtained")
+		sleep(1)
 
 # -------------------
 # |  Reverse Shell  |
