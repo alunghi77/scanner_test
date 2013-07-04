@@ -5,6 +5,8 @@ from Adafruit_I2C import Adafruit_I2C
 from Adafruit_MCP230xx import Adafruit_MCP230XX
 from Adafruit_CharLCDPlate import Adafruit_CharLCDPlate
 from subprocess import call
+from sys import exit
+from ConfigParser import SafeConfigParser
 
 import smbus
 import subprocess
