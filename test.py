@@ -83,7 +83,7 @@ def init_test():
 	# Starting On Board System Check
 	lcd.backlight(lcd.BLUE)
 	lcd.message("Welcome to \nGD Scanner Unit ")
-	sleep(21)
+	sleep(5)
 
 	# ---------------------
 	# | Ping System Check |
