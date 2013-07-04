@@ -26,7 +26,9 @@ iface = 'wlan0'
 # for the reverse shell test
 parser = SafeConfigParser()
 parser.read('./setting.conf')
- 
+
+userNameSSH = parser.get('reverse_shell', 'userName')
+passWordSSH = parser.get('reverse_shell', 'passWord')
 ccIP = parser.get('reverse_shell', 'reverseDest')
 
 lcd = Adafruit_CharLCDPlate(busnum = 1)
@@ -144,11 +146,17 @@ def do_display_ip():
 # -------------------
 def do_reverse_ssh():
 
+	lcd.clear()
+	lcd.backlight(lcd.VIOLET)
+	lcd.message("Reverse Tunnel:\nContacting..")
+	sleep(1)
+	lcd.message("Reverse Tunnel:\n" + userNameSSH + "@" + ccIP)
+
 	try:
 		ssh = paramiko.SSHClient()
 		ssh.load_system_host_keys()
 		ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-		ssh.connect(ccIP, username='twi7ch', password='none')
+		ssh.connect(ccIP, username=userNameSSH, password=passWordSSH)
 	except paramiko.AuthenticationException:
 		lcd.clear()
 		lcd.backlight(lcd.GREEN)
