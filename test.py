@@ -150,8 +150,10 @@ def do_reverse_ssh():
 	lcd.backlight(lcd.VIOLET)
 	lcd.message("Reverse Tunnel:\nContacting..")
 	sleep(1)
+	lcd.clear()
 	lcd.message("Reverse Tunnel:\n" + userNameSSH + "@" + ccIP)
 	sleep(1)
+	lcd.clear()
 	lcd.message("Reverse Tunnel:\n" + passWordSSH)
 
 	try:
