@@ -16,7 +16,47 @@ import paramiko
 import socket
 import signal
 
+# DEFINE network interface
+iface = 'wlan0'
+ 
+# INI file config file
+# Load in user name and IP address of command center 
+# for the reverse shell test
+parser = SafeConfigParser()
+parser.read('./setting.conf')
+ 
+ccIP = parser.get('reverse_shell', 'reverseDest')
+
 lcd = Adafruit_CharLCDPlate(busnum = 1)
+
+def TimeoutException(): 
+	lcd.clear()
+	lcd.backlight(lcd.OFF)
+	exit()
+ 
+def timeout(signum, frame):
+    raise TimeoutException()
+ 
+# Function which gets the IP address of a network interface
+def get_ip_address(ifname):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    return socket.inet_ntoa(fcntl.ioctl(
+        s.fileno(),
+        0x8915,  # SIOCGIFADDR
+        struct.pack('256s', ifname[:15])
+    )[20:24])
+ 
+# Function which gets the Default Gateway IP address
+def get_gateway(ifname):
+ 
+    proc = subprocess.Popen("ip route list dev " + ifname + " | awk ' /^default/ {print $3}'", \
+	shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+ 
+    return_code = proc.wait()
+    for line in proc.stdout:
+        line
+ 
+    return line
 
 def main():
 	while 1:
