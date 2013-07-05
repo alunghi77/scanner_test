@@ -62,6 +62,22 @@ def get_gateway(ifname):
  
     return line
 
+def do_get_temp():
+
+	# Put stderr and stdout into pipes
+	proc = subprocess.Popen("/opt/vc/bin/vcgencmd measure_temp 2>&1", \
+			shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+ 
+	return_code = proc.wait()
+
+	for line in proc.stdout:
+
+		print line;
+
+
+
+
+
 # ---------------------
 # | Ping System Check |
 # ---------------------
@@ -214,22 +230,27 @@ def init_test():
 	# ---------------------
 	# | Ping System Check |
 	# ---------------------
-	do_ping_test();
+	#do_ping_test();
 
 	# --------------------
 	# | Ping Default GW  |
 	# --------------------
-	do_ping_default_gw();
+	#do_ping_default_gw();
  
 	# --------------------
 	# | DHCP IP Address  |
 	# --------------------
- 	do_display_ip();
+ 	#do_display_ip();
 	
 	# -------------------
 	# |  Reverse Shell  |
 	# -------------------
-	do_reverse_ssh()
+	#do_reverse_ssh()
+
+	# ---------------------
+	# |  Get Temperature  |
+	# ---------------------
+	do_get_temp();
  
 	# Do we want to rerun the test?
 	lcd.clear()
