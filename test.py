@@ -100,10 +100,10 @@ def do_get_serial():
 
 		cpuserial = "ERROR000000000"
 
-	return cpuserial
-		
-
-
+	lcd.clear()
+	lcd.backlight(lcd.GREEN)
+	lcd.message("Serial ID:\n" + cpuserial)
+	sleep(2)
 
 
 # ---------------------
