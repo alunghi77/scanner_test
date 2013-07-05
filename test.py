@@ -71,7 +71,11 @@ def do_get_temp():
 	return_code = proc.wait()
 	lcd.clear()
 	lcd.backlight(lcd.GREEN)
-	lcd.message("Temperature:\n" + proc.stdout)
+
+	for line in proc.stdout:
+
+		lcd.message("Temperature:\n" + line)
+		
 	sleep(1)
 	
 
