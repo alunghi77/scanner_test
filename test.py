@@ -214,12 +214,12 @@ def init_test():
 	# ---------------------
 	# | Ping System Check |
 	# ---------------------
-	#do_ping_test();
+	do_ping_test();
 
 	# --------------------
 	# | Ping Default GW  |
 	# --------------------
-	#do_ping_default_gw();
+	do_ping_default_gw();
  
 	# --------------------
 	# | DHCP IP Address  |
