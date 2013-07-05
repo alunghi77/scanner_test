@@ -69,11 +69,13 @@ def do_get_temp():
 			shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
  
 	return_code = proc.wait()
+	lcd.clear()
+	lcd.backlight(lcd.GREEN)
+	lcd.message("Temperature:\n" + proc.stdout)
+	sleep(1)
+	
 
-	for line in proc.stdout:
-
-		print line;
-
+		
 
 
 
