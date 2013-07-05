@@ -39,28 +39,28 @@ def TimeoutException():
 	exit()
  
 def timeout(signum, frame):
-    raise TimeoutException()
+	raise TimeoutException()
  
 # Function which gets the IP address of a network interface
 def get_ip_address(ifname):
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    return socket.inet_ntoa(fcntl.ioctl(
-        s.fileno(),
-        0x8915,  # SIOCGIFADDR
-        struct.pack('256s', ifname[:15])
-    )[20:24])
+	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	return socket.inet_ntoa(fcntl.ioctl(
+		s.fileno(),
+		0x8915,  # SIOCGIFADDR
+		struct.pack('256s', ifname[:15])
+	)[20:24])
  
 # Function which gets the Default Gateway IP address
 def get_gateway(ifname):
  
-    proc = subprocess.Popen("ip route list dev " + ifname + " | awk ' /^default/ {print $3}'", \
+	proc = subprocess.Popen("ip route list dev " + ifname + " | awk ' /^default/ {print $3}'", \
 	shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
  
-    return_code = proc.wait()
-    for line in proc.stdout:
-        line
+	return_code = proc.wait()
+	for line in proc.stdout:
+		line
  
-    return line
+	return line
 
 def do_get_temp():
 
@@ -81,26 +81,26 @@ def do_get_temp():
 
 def do_get_serial():
 
-  	# Extract serial from cpuinfo file
-  	cpuserial = "0000000000000000"
+	# Extract serial from cpuinfo file
+	cpuserial = "0000000000000000"
 
-  	try:
+	try:
 
 		f = open('/proc/cpuinfo','r')
 
-    	for line in f:
+		for line in f:
 
-      		if line[0:6]=='Serial':
+			if line[0:6]=='Serial':
 
-        		cpuserial = line[10:26]
+				cpuserial = line[10:26]
 
-    	f.close()
+		f.close()
 
-  	except:
-  		
+	except:
+
 		cpuserial = "ERROR000000000"
 
-  	return cpuserial
+	return cpuserial
 		
 
 
@@ -248,7 +248,7 @@ def init_test():
 	# clear display
 	lcd.clear()
  
-    # Commented out to speed up overal test time
+	# Commented out to speed up overal test time
 	# Starting On Board System Check
 	lcd.backlight(lcd.BLUE)
 	lcd.message("Welcome to \nGD Scanner Unit ")
@@ -268,7 +268,7 @@ def init_test():
 	# --------------------
 	# | DHCP IP Address  |
 	# --------------------
- 	#do_display_ip();
+	#do_display_ip();
 	
 	# -------------------
 	# |  Reverse Shell  |
