@@ -75,10 +75,23 @@ def do_get_temp():
 	for line in proc.stdout:
 
 		lcd.message("Temperature:\n" + line)
-		
-	sleep(1)
+
+	sleep(2)
 	
 
+def do_get_serial():
+  	# Extract serial from cpuinfo file
+  	cpuserial = "0000000000000000"
+  	try:
+    	f = open('/proc/cpuinfo','r')
+    	for line in f:
+      		if line[0:6]=='Serial':
+        		cpuserial = line[10:26]
+    		f.close()
+  	except:
+		cpuserial = "ERROR000000000"
+
+  	return cpuserial
 		
 
 
@@ -256,7 +269,9 @@ def init_test():
 	# ---------------------
 	# |  Get Temperature  |
 	# ---------------------
-	do_get_temp();
+	#do_get_temp();
+
+	do_get_serial();
  
 	# Do we want to rerun the test?
 	lcd.clear()
